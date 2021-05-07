@@ -1,0 +1,11 @@
+Membership No  Date Joined  Active  
+Membership No  Date Joined  Active  
+    99916      2019-1-5     yes   
+    21913      2015-4-20    yes   
+    42754      2017-11-10   yes   
+    76956      2015-4-19    yes   
+    29733      2019-5-5     yes   
+    74955      2017-3-9     yes   
+    79818      2019-12-5    yes   
+    97482      2018-3-5     yes   
+    29032      2019-7-16    yes   

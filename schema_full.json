@@ -1,0 +1,165 @@
+Product_Info
+
+Product_Info {
+    _id: ObjectId                          //for single value fields
+    product_id: ref<Product.product_id>    //for referencing product_id    
+    short_description: String
+    product_dimensions: String
+    expiry_date: String
+    country_of_origin: String
+    unit: String
+    shipping_weight(kg): Double
+    MobilePhone_details: {                 //for embedded mobile phone details
+      brand: String
+      model: String
+      colour: String
+      features: [String]}                  //for arrays of features, 
+                                           //ex: memories, storages, size of screens
+    Book_details: {                        //for embedded book details
+      author_name: String
+      publisher: String
+      year_of_publication: Int32
+      ISBN: Int64}
+    CD_details: {                          //for embedded CD details
+      artist_name: String
+      number_of_track: Int32          
+      total_playing_time: Double           //Use minintes as units
+      publisher: String}
+    HomeAppliance_details: {               //for embedded home appliance details
+      voltage: Int32
+      colour: String
+      style: String}
+}// end of collection "Product_Info"
+
+Product {
+    _id: ObjectId                          //for single valued fields
+    product_id: Int32                         
+    type: String
+    category: String
+    name: String
+    average_customer_rating_score: Double
+    standard_price_to_customers: Double
+    cost_of_products_from_the_supplier: Double
+    ratings: {                             //for embedded ratings
+    rate: Double
+    timestamp: Date
+    order_id: ref<Past_Orders.order_id>    //for referencing order_id
+    reviewer_id: ref<Customer.customer_id> //for referencing customer_id
+    }
+}// end of collection "Product"
+
+Daily_Inventory_List {
+    _id: ObjectId                          //for single valued fields
+    date: Date
+    inventory_list: {                      //for embedded inventory
+    product_id: ref<Product.product_id>    //for referencing product_id
+    inventory: Int32                            
+    }
+    warehouse_name: String
+    warehouse_location: [Double,Double]    //for arrays of warehouse location
+}// end of collection "Daily_Inventory_List"
+
+History_Inventory_List {
+    _id: ObjectId                          //for single valued fields
+    date: Date
+    inventory_list: {                      //for embedded inventory
+    product_id: ref<Product.product_id>    //for referencing product_id
+    inventory: Int32
+    }
+    warehouse_name: String
+    warehouse_location:[Double,Double]     //for arrays of warehouse location
+}// end of collection "History_Inventory_List"
+
+Store {
+    _id: ObjectId                          //for single valued fields
+    address: String
+    location: [Double, Double]             //for arrays of store location
+    name: String
+    grocery: {                             //for embedded grocery stocks
+      product_id: ref<product.product_id>  //for referencing product_id
+      qty: Int32
+      expiration_date: Date               
+      stocked_arrived: Date    
+    }
+}// end of collection "Store"
+
+Partners {
+    _id: ObejctId                          //for single valued fields
+    name: String
+    partner_id: Int32
+    status: String                       
+    gps_location: [Double, Double]         //for arrays of partner location
+    phone_number: String
+    gender: String
+    age: Int32
+    avg_rating: ref<Past_Orders.rating>    //for referencing rating
+}// end of collection "Partners"
+
+Past_Orders {
+    _id: ObejctId                          //for single valued fields
+    order_id: Int32                       
+    customer_id: ref<Customer.customer_id> //for referencing customer_id
+    total_order_cost: Double
+    timestamp: Date
+    Past_Orders_items: {                   //for embedded past order items
+      product_id: ref<Product.product_id>  //for referencing product_id
+      quantity: Int32
+    }
+    delivery_info: {                       //for embedded delivery info
+      partner_id: ref<Partners.partner_id> //for referencing partner_id
+      rating: Int32 
+    }
+}// end of collection "Past_Orders"
+
+Current_Orders {
+    _id: ObejctId                          //for single valued fields
+    order_id: Int32
+    customer_id: ref<Customer.customer_id> //for referencing customer_id
+    timestamp: Date
+    Current_Orders_items :{                //for embedded current order items
+      product_id: ref<Product.product_id>  //for referencing product_id
+      quantity: Int32
+    }
+}// end of collection "Current_Orders"
+
+Counters {
+    _id: {
+      db: String
+      coll: String
+    }                       
+    seq_value: Int32
+}// end of collection "Counters"
+
+Top_Rating_items {
+    _id: String
+    highest_rating: Double
+    item:[ObjectId, Int32]                 //for arrays of product_id
+}// end of collection "Top_Rating_items"
+
+Customer {
+    _id: ObejctId                          //for single valued fields
+    name: String
+    gender: String
+    age: Int32
+    customer_id: Int32
+    address: {                             //for embedded address
+      house_number: Int32
+      street: String
+      city: String
+      postcode: String
+      gps: [Double, Double]                //for arrays of location
+      type: String
+    }
+    most_frequent_item: {                  //for embedded most frequent item
+      product_id: ref<Product.product_id>  //for referencing product_id
+    }
+    most_frequent_product_type: {          //for embedded most frequent product type
+      product_type: ref<Product.category>  //for referencing category
+    }
+    ratings: {
+      rate: Double
+      order_id: ref<Past_Orders.order_id>  //for referencing order_id
+      product_id: ref<Product.product_id>  //for referencing product_id
+      Timestamp: Date
+    }
+}// end of collection "Customer"
